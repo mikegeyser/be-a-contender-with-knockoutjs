@@ -23,8 +23,58 @@
 
                 // Post to the form's action, just serializing the form values.
                 $.post(form.action, $(form).serialize(), function (response) {
-                    self.results(response.Results);
+                    var mapping = {
+                        'create': function (item) {
+                            var person = new PersonViewModel();
+
+                            ko.mapping.fromJS(item.data, {}, person);
+
+                            return person;
+                        }
+                    };
+                    var data = response.Results;
+                    var target = self.results;
+
+                    ko.mapping.fromJS(data, mapping, target);
                 });
+            };
+
+            this.currentItem = ko.computed(function () {
+                // Get first result that isEditing()
+                return ko.utils.arrayFirst(self.results(), function (item) {
+                    return item.isEditing();
+                });
+            });
+
+            this.showList = ko.computed(function () {
+                return !self.currentItem();
+            });
+
+            this.showEditor = ko.computed(function () {
+                return !!self.currentItem();
+            });
+
+            this.back = function () {
+                self.currentItem().isEditing(false);
+            };
+        }
+
+        function PersonViewModel() {
+            this.isEditing = ko.observable(false);
+
+            var self = this;
+            this.edit = function () {
+                self.isEditing(true);
+            };
+
+            this.save = function () {
+                self.isEditing(false);
+
+                // Omitted for brevity
+            };
+
+            this.remove = function () {
+                // Omitted for brevity
             };
         }
 
@@ -42,6 +92,11 @@
     </script>
 }
 
-@Html.Partial("_Search")
+<div data-bind="visible: showList">
+    @Html.Partial("_Search")
 
-@Html.Partial("_Results")
+    @Html.Partial("_Results")
+</div>
+<div data-bind="visible: showEditor">
+    @Html.Partial("_Edit")
+</div>

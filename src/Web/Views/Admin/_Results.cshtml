@@ -28,7 +28,7 @@
             @td(model => model.Surname)
             @td(model => model.Email)
             <td>
-                @Html.ActionLink("Edit", "Edit") | @Html.ActionLink("Delete", "Delete")
+                <a href="#" data-bind="click: edit">Edit</a> | <a href="#" data-bind="click: remove">Remove</a>
             </td>
         </tr>
         <!-- /ko -->

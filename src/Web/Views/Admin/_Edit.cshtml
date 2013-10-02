@@ -1,41 +1,36 @@
-﻿@model Web.Models.Person
+﻿<!-- Change the bound model -->
+@model Web.Models.SearchViewModel
 
 <h2>Edit</h2>
 
+<!-- Razor helper to generate the field html -->
+@helper field(System.Linq.Expressions.Expression<Func<Web.Models.SearchViewModel, string>> expression)
+{
+    <div class="editor-label">
+        @Html.LabelFor(expression)
+    </div>
+    <div class="editor-field">
+        <input type="text" data-bind="value: @ExpressionHelper.GetExpressionText(expression)" />
+    </div>
+}
+
 @using (Html.BeginForm())
 {
-    <fieldset>
+    <!-- Explicitly change scope of the binding using 'with' -->
+    <fieldset data-bind="with: currentItem">
         <legend>Person</legend>
 
-        @Html.HiddenFor(model => model.Id)
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Surname)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Surname)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Email)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Email)
-        </div>
-
+        @field(model => model.Name)
+        @field(model => model.Surname)
+        @field(model => model.Email)
+        
         <p>
-            <input type="submit" value="Save" />
+            <button data-bind="click: save">Save</button>
         </p>
     </fieldset>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Search")
+    <!-- Bind the back link -->
+    <a href="#" data-bind="click: back">Back to List</a>
 </div>
