@@ -15,6 +15,6 @@
         @Html.LabelFor(model => model.Email)
         @Html.TextBoxFor(model => model.Email)
 
-        <button type="submit">Search</button>
+        <button type="submit" data-bind="click: search">Search</button>
     </fieldset>
 }

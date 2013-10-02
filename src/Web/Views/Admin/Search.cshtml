@@ -4,6 +4,44 @@
     ViewBag.Title = "Search";
 }
 
+@section scripts{
+    <!-- References to KnockoutJS and Mapping -->
+    <script src="~/Scripts/knockout-2.2.0.js"></script>
+    <script src="~/Scripts/knockout.mapping-latest.js"></script>
+
+    <script type="text/javascript">
+        function SearchViewModel() {
+            // To control local scope
+            var self = this;
+
+            // Array of results
+            this.results = ko.observableArray();
+
+            this.search = function () {
+                // Get the first form on the page, which is the search form.
+                var form = $('form')[0];
+
+                // Post to the form's action, just serializing the form values.
+                $.post(form.action, $(form).serialize(), function (response) {
+                    self.results(response.Results);
+                });
+            };
+        }
+
+        // To be able to test model in a global scope.
+        var model = {};
+
+        $(function () {
+
+            // Create new model
+            model = new SearchViewModel();
+
+            // Apply bindings
+            ko.applyBindings(model);
+        });
+    </script>
+}
+
 @Html.Partial("_Search")
 
 @Html.Partial("_Results")

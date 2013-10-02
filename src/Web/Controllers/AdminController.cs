@@ -24,11 +24,11 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Search(SearchViewModel model)
+        public JsonResult Search(SearchViewModel model)
         {
             model.Results = _repository.FindAll();
             
-            return View(model);
+            return Json(model);
         }
 
         public ActionResult Details(int id)

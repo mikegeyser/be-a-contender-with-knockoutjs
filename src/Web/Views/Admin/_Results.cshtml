@@ -1,8 +1,13 @@
 ﻿@model Web.Models.SearchViewModel
 
-<br />
-@if (Model.Results != null && Model.Results.Any())
+@helper td(System.Linq.Expressions.Expression<Func<Web.Models.Person, object>> expression)
 {
+    <td data-bind="text: @ExpressionHelper.GetExpressionText(expression)"></td>
+}
+
+<!-- Only show this section if there are any results -->
+<div data-bind="visible: results().length > 0">
+    <br />
     <table class="table">
         <tr>
             <th>
@@ -16,27 +21,19 @@
             </th>
             <th></th>
         </tr>
-
-        @foreach (var item in Model.Results)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Surname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) | @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                </td>
-            </tr>
-        }
-
+        <!-- Use a 'virtual' foreach tag -->
+        <!-- ko foreach: results -->
+        <tr>
+            @td(model => model.Name)
+            @td(model => model.Surname)
+            @td(model => model.Email)
+            <td>
+                @Html.ActionLink("Edit", "Edit") | @Html.ActionLink("Delete", "Delete")
+            </td>
+        </tr>
+        <!-- /ko -->
     </table>
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
-}
+</div>
