@@ -41,7 +41,7 @@
 				color: white;
 			}
 
-			#title img {
+			div.reveal img {
 				border: 0;
 				box-shadow: 0 0 0 rgba(0, 0, 0, 0);
 				background: rgba(0, 0, 0, 0);
@@ -51,6 +51,11 @@
 				color: white;
 			}
 
+			div.reveal img.twitter, 
+			div.reveal img.github {
+				top: 30px;
+				position: relative;
+			}
 		</style>
 	</head>
 
@@ -69,25 +74,53 @@
 				</section>
 
 				<section data-background="#FFFFFF">
-					<h1>Objective</h1>
+					<h1>Assumptions</h1>
+					<ul>
+						<li>Typical scaffolded MVC app</li>
+						<li>
+							Knockout is:
+							<ul>
+								<li>client-side, 2-way databinding</li>
+								<li>a library, not a framework</li>
+								<li>observable pattern</li>
+								<li>html templating</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
 
+				<section data-background="#FFFFFF">
+					<h1>Objectives</h1>
+					<ul>
+						<li>Keep it DRY. Keep it clean</li>
+						<li>Single canonical model</li>
+						<li>Change as little as possible</li>
+					</ul>
 				</section>
 
 				<section data-background="#FFFFFF">
 					<h1>Step 1: Ajaxify</h1>
-					
+					<ul>
+						<li>Create search view model</li>
+						<li>Modify search to be ajax</li>
+						<li>Dynamically bind the results</li>
+					</ul>
 				</section>
 
 				<section data-background="#FFFFFF">
 					<h1>Step 2: Map all the things</h1>
-					
+					<ul>
+						<li>Create a person view model</li>
+						<li>Map results to the model</li>
+						<li>Wire up the edit screen</li>
+					</ul>
 				</section>
 
 				<section data-background="#FFFFFF">
 					<h1>Questions?</h1>
 
-					<h3>@mikegeyser</h3>
-					<h3>github.com/mikegeyser</h3>
+					<h3><img class="twitter" src="images/twitter.png" /> @mikegeyser</h3>
+					<h3><img class="github" src="images/github.png" /> github.com/mikegeyser</h3>
 					<br />
 					<p>
 						The code and presentation will be made available on github after the event.
